@@ -2,17 +2,18 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="viewport" content="width=device-width,initial-scale=1" /> -->
   <title>Catatan Saya — FastAPI</title>
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
 <body>
   <div class="container">
     <div class="top-bar">
-      <h1>📘 Catatan Saya</h1>
+      <h1>📘 Identitas Anggota</h1>
 
       <div class="controls">
-        <input id="searchInput" type="text" placeholder="🔍 Cari catatan..." />
+        <input id="searchInput" type="text" placeholder="🔍 Cari NIK..." />
         <button id="toggleTheme" type="button">🌙</button>
       </div>
     </div>
@@ -22,7 +23,7 @@
     </div>
 
     <form action="/add" method="post" class="add-form">
-      <input name="content" type="text" placeholder="Tulis catatan baru..." required />
+      <input name="content" type="text" placeholder="Input NIK Anggota..." required />
       <button type="submit">Tambah</button>
     </form>
 

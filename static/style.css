@@ -219,3 +219,62 @@ body.dark h1 {
 #cancelEditBtn:hover {
   background-color: #d0d0d0;
 }
+
+/* === RESPONSIVE DESIGN (untuk tampilan HP) === */
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #searchInput {
+    flex: 1;
+    width: 70%;
+  }
+
+  .add-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .add-form input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .add-form button {
+    width: 100%;
+  }
+
+  .note {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    margin-top: 8px;
+    align-self: flex-end;
+  }
+
+  h1 {
+    font-size: 1.5em;
+    text-align: left;
+  }
+
+  button,
+  input {
+    font-size: 16px; /* agar tidak terlalu kecil di HP */
+  }
+}

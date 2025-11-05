@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Anggota</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <div class="container" style="text-align:center;">
+    <h1>📊 Dashboard Anggota</h1>
+    <p>Pilih menu yang ingin Anda gunakan:</p>
+
+    <div style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
+      <a href="/" style="text-decoration:none;">
+        <button style="width:100%; padding:12px; font-size:16px;">🧾 Input Anggota Baru</button>
+      </a>
+
+      <a href="/list" style="text-decoration:none;">
+        <button style="width:100%; padding:12px; font-size:16px;">📋 Lihat Daftar Anggota</button>
+      </a>
+
+      <a href="/download_csv" style="text-decoration:none;">
+        <button style="width:100%; padding:12px; font-size:16px;">💾 Unduh Data CSV</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

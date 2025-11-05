@@ -150,6 +150,36 @@ def download_csv():
         headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
+@app.get("/dashboard")
+def dashboard(request: Request):
+    """Halaman utama dashboard"""
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+
+@app.get("/list")
+def list_anggota(request: Request):
+    """Halaman daftar semua anggota"""
+    with SessionLocal() as session:
+        notes = session.query(Note).order_by(Note.id).all()
+
+    jakarta_tz = ZoneInfo("Asia/Jakarta")
+    notes_for_template = []
+    for n in notes:
+        created_local = None
+        if getattr(n, "created_at", None):
+            dt = n.created_at
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            created_local = dt.astimezone(jakarta_tz).strftime("%d %b %Y %H:%M")
+        notes_for_template.append({
+            "id": n.id,
+            "content": n.content,
+            "created_local": created_local
+        })
+
+    return templates.TemplateResponse("list.html", {"request": request, "notes": notes_for_template})
+
+
 
 
 
