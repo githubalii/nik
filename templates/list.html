@@ -9,6 +9,49 @@
 <body>
   <div class="container">
     <h1>📋 Daftar Anggota</h1>
+
+    <div style="margin-bottom:15px;">
+      <a href="/dashboard"><button class="home-btn">🏠 Kembali ke Dashboard</button></a>
+    </div>
+
+    {% if notes %}
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr style="background:#3f51b5; color:white;">
+          <th style="padding:8px; border:1px solid #ccc;">ID</th>
+          <th style="padding:8px; border:1px solid #ccc;">NIK Anggota</th>
+          <th style="padding:8px; border:1px solid #ccc;">Tanggal Input</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in notes %}
+        <tr>
+          <td style="padding:8px; border:1px solid #ccc;">{{ n.id }}</td>
+          <td style="padding:8px; border:1px solid #ccc;">{{ n.content }}</td>
+          <td style="padding:8px; border:1px solid #ccc;">{{ n.created_local }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>Tidak ada anggota yang terdaftar.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Anggota</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Daftar Anggota</h1>
     <a href="/dashboard"><button>⬅️ Kembali ke Dashboard</button></a>
 
     <div style="margin-top:20px;">
@@ -37,4 +80,4 @@
     </div>
   </div>
 </body>
-</html>
+</html> -->

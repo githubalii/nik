@@ -42,8 +42,11 @@ Base.metadata.create_all(bind=engine)
 # Routes: CRUD
 # --------------------
 
-@app.get("/")
-def home(request: Request):
+# @app.get("/")
+# def home(request: Request):
+
+@app.get("/input")
+def input_anggota(request: Request):
     with SessionLocal() as session:
         notes = session.query(Note).order_by(Note.id).all()
 
@@ -64,7 +67,8 @@ def home(request: Request):
             "created_local": created_local
         })
 
-    return templates.TemplateResponse("index.html", {"request": request, "notes": notes_for_template})
+    # return templates.TemplateResponse("index.html", {"request": request, "notes": notes_for_template})
+    return templates.TemplateResponse("input.html", {"request": request, "notes": notes_for_template})
 
 
 # @app.get("/")
@@ -80,7 +84,8 @@ def add_note(content: str = Form(...)):
         note = Note(content=content)
         session.add(note)
         session.commit()
-    return RedirectResponse(url="/", status_code=303)
+    # return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/input", status_code=303)
 
 
 @app.post("/edit/{note_id}")

@@ -278,3 +278,19 @@ body.dark h1 {
     font-size: 16px; /* agar tidak terlalu kecil di HP */
   }
 }
+
+.home-btn {
+  background-color: #607d8b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #455a64;
+  transform: scale(1.03);
+}
+
