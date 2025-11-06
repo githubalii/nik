@@ -5,28 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Input Anggota — FastAPI</title>
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+  <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>🧾 Input Anggota</h1>
 
-    <!-- 🏠 Tombol Kembali ke Dashboard (sama seperti di /list) -->
     <div style="margin-bottom:15px;">
       <a href="/dashboard"><button class="home-btn">🏠 Kembali ke Dashboard</button></a>
     </div>
 
-    <!-- 💾 Unduh CSV -->
     <div style="text-align: right; margin: 10px 0;">
       <a href="/download_csv"><button class="download-csv">💾 Unduh CSV</button></a>
     </div>
 
-    <!-- 🧾 Form Input Anggota -->
-    <form action="/add" method="post" class="add-form">
-      <input name="content" type="text" placeholder="Input NIK anggota" required />
+    <!-- 🧾 Input Form -->
+    <form action="/add" method="post" class="add-form" id="addForm">
+      <input id="nikInput" name="content" type="text" placeholder="Input NIK anggota" required />
       <button type="submit">Tambah</button>
     </form>
 
-    <!-- 📋 Daftar Anggota -->
+    <!-- 📷 Tombol scan QR -->
+    <div style="text-align:center; margin-bottom:20px;">
+      <button id="scanBtn" class="scan-btn">📷 Scan QR Anggota</button>
+    </div>
+
+    <!-- 📸 Area kamera QR -->
+    <div id="qrScanner" style="width:100%; display:none; margin-top:10px;">
+      <div id="reader" style="width:100%;"></div>
+      <button id="stopScanBtn" class="cancel-scan-btn">❌ Tutup Scanner</button>
+    </div>
+
+    <!-- 📋 Daftar anggota -->
     <div id="notes" class="notes">
       {% for note in notes %}
       <div class="note" data-note-id="{{ note.id }}">
@@ -59,14 +69,49 @@
   </div>
 
   <script>
-    // Fungsi tampilkan form edit
+    // === QR SCANNER SETUP ===
+    const scanBtn = document.getElementById("scanBtn");
+    const qrScanner = document.getElementById("qrScanner");
+    const reader = document.getElementById("reader");
+    const nikInput = document.getElementById("nikInput");
+    const stopScanBtn = document.getElementById("stopScanBtn");
+    let html5QrCode;
+
+    scanBtn.addEventListener("click", () => {
+      qrScanner.style.display = "block";
+      html5QrCode = new Html5Qrcode("reader");
+      Html5Qrcode.getCameras().then(devices => {
+        if (devices && devices.length) {
+          const camId = devices[0].id;
+          html5QrCode.start(
+            camId,
+            { fps: 10, qrbox: 250 },
+            decodedText => {
+              nikInput.value = decodedText;
+              html5QrCode.stop();
+              qrScanner.style.display = "none";
+            },
+            errorMsg => { console.log("QR scanning...", errorMsg); }
+          );
+        }
+      });
+    });
+
+    stopScanBtn.addEventListener("click", () => {
+      if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+          qrScanner.style.display = "none";
+        });
+      }
+    });
+
+    // === EDIT / SEARCH / THEME ===
     function showEditForm(id, content) {
       document.getElementById("editForm").style.display = "block";
       document.getElementById("editId").value = id;
       document.getElementById("editContent").value = content;
     }
 
-    // Submit form edit via fetch
     document.getElementById("editFormInner").onsubmit = function (e) {
       e.preventDefault();
       let id = document.getElementById("editId").value;
@@ -77,24 +122,10 @@
       }).then(() => window.location.reload());
     };
 
-    // Tombol batal edit
     document.getElementById("cancelEditBtn").addEventListener("click", () => {
       document.getElementById("editForm").style.display = "none";
     });
 
-    // 🔍 Pencarian langsung
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.addEventListener("input", () => {
-        const q = searchInput.value.toLowerCase();
-        document.querySelectorAll(".note").forEach(noteEl => {
-          const text = noteEl.querySelector("p").textContent.toLowerCase();
-          noteEl.style.display = text.includes(q) ? "flex" : "none";
-        });
-      });
-    }
-
-    // 🌙 Tema gelap
     const toggleBtn = document.getElementById("toggleTheme");
     if (toggleBtn) {
       const current = localStorage.getItem("theme");

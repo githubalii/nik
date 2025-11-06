@@ -294,3 +294,32 @@ body.dark h1 {
   transform: scale(1.03);
 }
 
+.scan-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.scan-btn:hover {
+  background-color: #388e3c;
+  transform: scale(1.03);
+}
+
+.cancel-scan-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-scan-btn:hover {
+  background-color: #d32f2f;
+}
